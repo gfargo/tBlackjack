@@ -159,6 +159,8 @@ const BlackjackGame = () => {
               value={(card as { value: TCardValue }).value}
               suit={(card as { suit: TSuit }).suit}
               faceUp={gameState !== 'playing' || index === 0}
+              variant='mini'
+
             />
           ))}
         </Box>
@@ -179,6 +181,7 @@ const BlackjackGame = () => {
               key={index}
               value={(card as { value: TCardValue }).value}
               suit={(card as { suit: TSuit }).suit}
+              variant='mini'
             />
           ))}
         </Box>
