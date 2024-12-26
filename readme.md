@@ -150,19 +150,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Card rendering powered by [ink-playing-cards](https://github.com/gfargo/ink-playing-cards)
 - Inspired by classic terminal games
 
-## Author ✨
-
-**Griffen Fargo** - [@gfargo](https://github.com/gfargo)
-
 ## Support 💖
 
 If you find this project helpful, please consider giving it a ⭐️ on GitHub!
 
+<!-- 
 ## Roadmap 🗺️
 
 ### Phase 1: Enhanced Gameplay
 
 - [ ] Betting system with chip management
+- [ ] Down down functionality
 - [ ] Split pairs functionality
 - [ ] Insurance when dealer shows Ace
 - [ ] Surrender option
@@ -170,26 +168,13 @@ If you find this project helpful, please consider giving it a ⭐️ on GitHub!
 
 ### Phase 2: User Experience
 
-- [ ] Custom themes and card styles
-- [ ] Sound effects and haptic feedback
-- [ ] Basic strategy hints
 - [ ] Hand history with replay
-- [ ] Performance optimizations
 
 ### Phase 3: Advanced Features
 
 - [ ] Multiplayer support
-- [ ] Tournament mode
-- [ ] Achievement system
-- [ ] Custom rule configurations
 - [ ] Persistent statistics
 
-### Phase 4: Platform Support
-
-- [ ] Web-based version
-- [ ] Mobile-friendly UI
-- [ ] Cross-platform compatibility
-- [ ] Cloud save support
-- [ ] Offline mode
+-->
 
 Want to contribute? Check out our [Contributing Guidelines](CONTRIBUTING.md) or pick up one of the roadmap items!
