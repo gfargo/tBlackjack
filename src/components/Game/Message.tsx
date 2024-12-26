@@ -1,21 +1,63 @@
-import React from 'react'
-import { Text } from 'ink'
+import React, { useEffect, useState } from 'react'
+import { Box, Text } from 'ink'
 import chalk from 'chalk'
+import type { GameStatus } from '../../utils/types.js'
 
 interface MessageProps {
-  message: string
+  status: GameStatus
 }
 
-const Message: React.FC<MessageProps> = ({ message }) => {
-  if (!message) return null
+const getMessageColor = (type: GameStatus['type']) => {
+  switch (type) {
+    case 'success':
+      return chalk.green
+    case 'error':
+      return chalk.red
+    case 'warning':
+      return chalk.yellow
+    default:
+      return chalk.blue
+  }
+}
 
-  const coloredMessage = message.includes('win')
-    ? chalk.green(message)
-    : message.includes('lose') || message.includes('Bust')
-    ? chalk.red(message)
-    : chalk.yellow(message)
+const Message: React.FC<MessageProps> = ({ status }) => {
+  const [visible, setVisible] = useState(true)
+  
+  useEffect(() => {
+    setVisible(true)
+    
+    if (status.duration) {
+      const timer = setTimeout(() => {
+        setVisible(false)
+      }, status.duration)
+      
+      return () => clearTimeout(timer)
+    }
+    return undefined
+  }, [status])
 
-  return <Text>{coloredMessage}</Text>
+  const colorFn = getMessageColor(status.type)
+
+  return (
+    <Box 
+      borderStyle="round" 
+      paddingX={1}
+      minHeight={3}
+      alignItems="center"
+      justifyContent="center"
+    >
+      {visible && status.message ? (
+        <Text>
+          {colorFn(status.message)}
+          {status.details && (
+            <Text dimColor> • {status.details}</Text>
+          )}
+        </Text>
+      ) : (
+        <Text> </Text>
+      )}
+    </Box>
+  )
 }
 
 export default Message
