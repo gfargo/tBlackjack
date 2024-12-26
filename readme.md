@@ -9,12 +9,28 @@ A beautiful terminal-based Blackjack game built with TypeScript, React Ink, and 
 
 ## Features 🎯
 
+### Core Gameplay
+
+- 🎲 Standard Blackjack rules with dealer hit on soft 17
 - 🎨 Beautiful terminal UI using React Ink
 - 🃏 Realistic playing card rendering
-- 🎮 Intuitive keyboard controls
-- 📖 Built-in help and instructions
-- 🎲 Standard Blackjack rules
 - ⚡️ Fast and responsive gameplay
+
+### Interactive Experience
+
+- 🤖 Animated dealer AI with personality
+- 💭 Real-time dealer thought process
+- 🎮 Intuitive keyboard controls
+- 📊 Real-time game statistics
+- 🔄 Smart deck management with shuffle animations
+
+### Game Features
+
+- 📈 Session statistics tracking
+- 🎯 Hand evaluation and scoring
+- 💫 Smooth animations and transitions
+- 📖 Built-in help and instructions
+- 🎨 Color-coded messages and status updates
 
 ## Installation 💻
 
@@ -29,23 +45,50 @@ npm install -g tblackjack
 ## How to Play 🎮
 
 1. Start the game:
+
    ```bash
    tblackjack
    ```
 
 2. Controls:
-   - `S` - Start game / Stand
-   - `H` - Toggle help / Hit
+   - `S` - Stand (end your turn)
+   - `H` - Hit (draw a card)
+
    - `N` - New game (after round ends)
+   - `TAB` - Toggle statistics
+   - `Q` - Quit game
+
+   During welcome screen:
+   - `S` - Start game
+   - `H` - Toggle help
    - `Q` - Quit game
 
 ## Game Rules 📋
 
-Standard Blackjack rules apply:
-- Try to get as close to 21 as possible without going over
+### Card Values
+
+- Number cards (2-10) are worth their face value
 - Face cards (J, Q, K) are worth 10
-- Aces are worth 1 or 11
-- Dealer must hit on 16 and stand on 17
+- Aces are worth 1 or 11 (automatically optimized)
+
+### Gameplay
+
+- Try to get as close to 21 as possible without going over
+- Dealer must hit on soft 17 (Ace counted as 11)
+- Dealer must stand on hard 17 or higher
+- Blackjack (Ace + 10-value card) beats regular 21
+
+### Actions
+
+- **Hit**: Draw another card
+- **Stand**: End your turn
+
+### Winning
+
+- Beat the dealer's hand without going over 21
+- Win automatically if dealer busts (goes over 21)
+- Push (tie) if your score equals dealer's
+- Lose if you bust or dealer has higher score
 
 ## Development 🛠️
 
@@ -57,17 +100,20 @@ Standard Blackjack rules apply:
 ### Setup
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/gfargo/tblackjack.git
    cd tblackjack
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    ```
 
 3. Start development mode:
+
    ```bash
    npm run dev
    ```
@@ -111,3 +157,39 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support 💖
 
 If you find this project helpful, please consider giving it a ⭐️ on GitHub!
+
+## Roadmap 🗺️
+
+### Phase 1: Enhanced Gameplay
+
+- [ ] Betting system with chip management
+- [ ] Split pairs functionality
+- [ ] Insurance when dealer shows Ace
+- [ ] Surrender option
+- [ ] Multi-deck support
+
+### Phase 2: User Experience
+
+- [ ] Custom themes and card styles
+- [ ] Sound effects and haptic feedback
+- [ ] Basic strategy hints
+- [ ] Hand history with replay
+- [ ] Performance optimizations
+
+### Phase 3: Advanced Features
+
+- [ ] Multiplayer support
+- [ ] Tournament mode
+- [ ] Achievement system
+- [ ] Custom rule configurations
+- [ ] Persistent statistics
+
+### Phase 4: Platform Support
+
+- [ ] Web-based version
+- [ ] Mobile-friendly UI
+- [ ] Cross-platform compatibility
+- [ ] Cloud save support
+- [ ] Offline mode
+
+Want to contribute? Check out our [Contributing Guidelines](CONTRIBUTING.md) or pick up one of the roadmap items!
