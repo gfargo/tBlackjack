@@ -33,11 +33,15 @@ A beautiful terminal-based Blackjack game built with TypeScript, React Ink, and 
 
 ## Installation 💻
 
-```bash
-# Play instantly with npx
-npx tblackjack
+Play instantly with npx
 
-# Or install globally
+```bash
+npx tblackjack
+```
+
+Or install globally
+
+```bash
 npm install -g tblackjack
 ```
 
