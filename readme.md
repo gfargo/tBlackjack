@@ -28,7 +28,6 @@ A beautiful terminal-based Blackjack game built with TypeScript, React Ink, and 
 
 - 📈 Session statistics tracking
 - 🎯 Hand evaluation and scoring
-- 💫 Smooth animations and transitions
 - 📖 Built-in help and instructions
 - 🎨 Color-coded messages and status updates
 
