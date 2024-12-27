@@ -5,7 +5,7 @@
 
 A beautiful terminal-based Blackjack game built with TypeScript, React Ink, and ♠️ playing cards ♥️
 
-![tBlackjack Demo](https://raw.githubusercontent.com/gfargo/tblackjack/main/assets/demo.gif)
+<!-- ![tBlackjack Demo](https://raw.githubusercontent.com/gfargo/tblackjack/main/assets/demo.gif) -->
 
 ## Features 🎯
 
