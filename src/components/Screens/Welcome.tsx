@@ -39,7 +39,7 @@ const Welcome: React.FC<WelcomeProps> = ({
       <Box
         flexDirection="column"
         marginBottom={1}
-        paddingX={4}
+        paddingX={3}
         borderDimColor
         borderStyle={{
           topLeft: '♦',
