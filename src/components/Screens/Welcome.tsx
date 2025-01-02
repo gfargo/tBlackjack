@@ -1,6 +1,9 @@
-import chalk from 'chalk'
-import { Box, Text, useApp, useInput } from 'ink'
+import { Box, Text, useApp } from 'ink'
+import BigText from 'ink-big-text'
+import { EnhancedSelectInput } from 'ink-enhanced-select-input'
+import Gradient from 'ink-gradient'
 import React from 'react'
+EnhancedSelectInput
 
 interface WelcomeProps {
   onStartGame: () => void
@@ -14,24 +17,44 @@ const Welcome: React.FC<WelcomeProps> = ({
   onToggleHelp,
 }) => {
   const { exit } = useApp()
-  useInput((input) => {
-    if (input === 's') {
-      onStartGame()
-    } else if (input === 'h') {
-      onToggleHelp()
-    } else if (input === 'q') {
-      exit()
-    }
-  })
+
+  // useInput((input) => {
+  //   if (input === 's') {
+  //     onStartGame()
+  //   } else if (input === 'h') {
+  //     onToggleHelp()
+  //   } else if (input === 'q') {
+  //     exit()
+  //   }
+  // })
 
   return (
-    <Box flexDirection="column" alignItems="center" padding={1}>
-      <Text bold color="green">
-        {chalk.bold('♠ ♥ ♣ ♦')} Welcome to Blackjack {chalk.bold('♦ ♣ ♥ ♠')}
-      </Text>
+    <Box
+      flexDirection="column"
+      alignItems="center"
+      padding={1}
+      // height={10}
+      justifyContent="center"
+    >
+      <Box
+        flexDirection="column"
+        marginBottom={1}
+        paddingX={4}
+        borderDimColor
+        borderStyle={{
+          topLeft: '♦',
+          top: '♦',
+          topRight: '♥',
+          left: '♣',
+          bottomLeft: '♣',
+          bottom: '♠',
+          bottomRight: '♠',
+          right: '♥',
+        }}
+      >
 
       {showHelp ? (
-        <Box flexDirection="column" marginTop={1} gap={1}>
+        <Box flexDirection="column" marginY={1} gap={1}>
           <Box flexDirection="column">
             <Text bold>How to Play:</Text>
             <Text>
@@ -50,12 +73,43 @@ const Welcome: React.FC<WelcomeProps> = ({
           </Box>
         </Box>
       ) : (
-        <Box flexDirection="column" marginTop={1}>
-          <Text>Press {chalk.yellow.bold('S')} to start the game</Text>
-          <Text>Press {chalk.yellow.bold('H')} to toggle help</Text>
-          <Text>Press {chalk.yellow.bold('Q')} to quit</Text>
-        </Box>
+        
+        <Gradient name="morning">
+          <BigText text="Blackjack" />
+        </Gradient>
       )}
+      </Box>
+
+      <Box flexDirection="column" marginBottom={1}>
+        <EnhancedSelectInput
+          orientation="horizontal"
+          indicatorComponent={({ isSelected }) => (
+            <Text bold color={isSelected ? 'red' : undefined}>
+              {'  '}
+            </Text>
+          )}
+          items={[
+            { label: 'Start Game', value: 's', indicator: '♠', hotkey: 's' },
+            {
+              label: showHelp ? 'Hide Help' : 'Toggle Help',
+              value: 'h',
+              indicator: '♥',
+              hotkey: 'h',
+            },
+            { label: 'Quit', value: 'q', indicator: '♣', hotkey: 'q' },
+          ]}
+          onSelect={({ value }) => {
+            if (value === 's') {
+              onStartGame()
+            } else if (value === 'h') {
+              onToggleHelp()
+            } else if (value === 'q') {
+              exit()
+            }
+          }}
+        />
+      </Box>
+
     </Box>
   )
 }

@@ -25,6 +25,9 @@
   ],
   "dependencies": {
     "ink": "^5.1.0",
+    "ink-big-text": "^2.0.0",
+    "ink-enhanced-select-input": "^0.2.0",
+    "ink-gradient": "^3.0.0",
     "ink-playing-cards": "^0.3.8",
     "meow": "^11.0.0",
     "react": "^18.2.0"
