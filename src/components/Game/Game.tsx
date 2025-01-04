@@ -451,6 +451,7 @@ const Game: React.FC = () => {
         evaluation={gameState.handEvaluation.dealer}
         isDealer
         hideEvaluation={gameState.phase === 'playerTurn'}
+        isActive={gameState.phase === 'dealerTurn'}
         label="Dealer's Hand"
       />
 

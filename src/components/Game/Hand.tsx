@@ -70,7 +70,7 @@ const Hand: React.FC<HandProps> = ({
             value={(card as { value: TCardValue }).value}
             suit={(card as { suit: TSuit }).suit}
             faceUp={!isDealer || !hideEvaluation || index === 0}
-            // variant='micro'
+            variant='mini'
           />
         ))}
       </Box>
