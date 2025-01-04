@@ -1,8 +1,8 @@
-import React from 'react'
-import { Box, Text } from 'ink'
-import { MiniCard } from 'ink-playing-cards'
-import type { TCard, TCardValue, TSuit } from 'ink-playing-cards/dist/types'
 import chalk from 'chalk'
+import { Box, Text } from 'ink'
+import type { TCard, TCardValue, TSuit } from 'ink-playing-cards'
+import { MiniCard } from 'ink-playing-cards'
+import React from 'react'
 import type { HandEvaluation } from '../../utils/types.js'
 
 interface HandProps {
@@ -70,6 +70,7 @@ const Hand: React.FC<HandProps> = ({
             value={(card as { value: TCardValue }).value}
             suit={(card as { suit: TSuit }).suit}
             faceUp={!isDealer || !hideEvaluation || index === 0}
+            // variant='micro'
           />
         ))}
       </Box>

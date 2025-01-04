@@ -2700,10 +2700,10 @@ ink-gradient@^3.0.0:
     prop-types "^15.8.1"
     strip-ansi "^7.1.0"
 
-ink-playing-cards@^0.3.8:
-  version "0.3.8"
-  resolved "https://registry.npmjs.org/ink-playing-cards/-/ink-playing-cards-0.3.8.tgz"
-  integrity sha512-dXALlv9f+rHkPpGPqUJqy/nF/cZiniSAfEMW7N95OzlIrUqECIPw0FUnBCPXIdHUoPh+Mard0wUdYeTf65E1Dg==
+ink-playing-cards@^0.4.7:
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/ink-playing-cards/-/ink-playing-cards-0.4.7.tgz#146da278622b327b74e91c4c4250b59a40d038c4"
+  integrity sha512-FEs87N5w7BpS9ldX6lxvBeb2rAbspw91qOJUcSeHOvqWpgpziMLxuay8jJkfoyGnDZZik2QCdFcTQnvRkJ6rig==
   dependencies:
     ink "^4.1.0"
     meow "^11.0.0"

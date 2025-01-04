@@ -1,15 +1,11 @@
 import chalk from 'chalk'
 import { Box, Text, useApp, useInput } from 'ink'
-import { useDeck } from 'ink-playing-cards'
-import React, { useEffect, useState } from 'react'
+import { createStandardDeck, useDeck, Zones } from 'ink-playing-cards'
+import type { TCard } from 'ink-playing-cards/dist/types'
+import React, { useCallback, useEffect, useState } from 'react'
 import { DealerMessages } from '../../utils/dealerMessages.js'
 import { evaluateHand } from '../../utils/handEvaluation.js'
-import type { TCard } from 'ink-playing-cards/dist/types'
-import type {
-  GameState,
-  GameStatistics,
-  GameStatus,
-} from '../../utils/types.js'
+import type { GameState, GameStatistics } from '../../utils/types.js'
 import { dealerPlay as playDealerTurn } from './dealerPlay.js'
 import DealerThought from './DealerThought.js'
 import GameControls from './GameControls.js'
@@ -35,7 +31,7 @@ const initialStatistics: GameStatistics = {
 }
 
 const Game: React.FC = () => {
-  const { deck, shuffle } = useDeck()
+  const { deck, shuffle, reset, discardPile } = useDeck()
   const [showStats, setShowStats] = useState(false)
   const [gameState, setGameState] = useState<GameState>({
     phase: 'dealing',
@@ -118,6 +114,8 @@ const Game: React.FC = () => {
   }
 
   const updateGameState = (updates: Partial<GameState>) => {
+    // console.log('discard pile currently', discardPile)
+
     setGameState((current) => {
       const newState = {
         ...current,
@@ -155,10 +153,6 @@ const Game: React.FC = () => {
     })
   }
 
-  const setStatus = (status: GameStatus) => {
-    updateGameState({ status })
-  }
-
   const shuffleDeck = async () => {
     // Visual feedback before shuffle
     updateGameState({
@@ -170,7 +164,7 @@ const Game: React.FC = () => {
     })
 
     // Pause for visual effect
-    await sleep(1500)
+    await sleep(600)
 
     // Perform shuffle
     shuffle()
@@ -204,41 +198,67 @@ const Game: React.FC = () => {
     return shouldShuffle
   }
 
-  const startNewGame = async () => {
+  const endRoundAndResetDeck = useCallback(() => {
+    setGameState((current) => {
+      reset(new Zones.Deck([...createStandardDeck()]))
+
+      return {
+        ...current,
+        status: {
+          type: 'error',
+          message: 'Error: Not enough cards to deal',
+        },
+        playerHand: [],
+        dealerHand: [],
+      }
+    })
+  }, [gameState, discardPile, deck, reset])
+
+  const startNewGame = useCallback(async () => {
     // Always shuffle at the start of a new game
-    await shuffleDeck()
 
-    const card1 = deck.drawCard()
-    const card2 = deck.drawCard()
-    const dealerCard1 = deck.drawCard()
-    const dealerCard2 = deck.drawCard()
+    // need at least 4 cards to deal
+    if (deck.cards.length >= 4) {
+      const card1 = deck.drawCard()
+      const card2 = deck.drawCard()
+      const dealerCard1 = deck.drawCard()
+      const dealerCard2 = deck.drawCard()
 
-    if (card1 && card2 && dealerCard1 && dealerCard2) {
-      const playerHand = [card1, card2]
-      const dealerHand = [dealerCard1, dealerCard2]
+      if (card1 && card2 && dealerCard1 && dealerCard2) {
+        const playerHand = [card1, card2]
+        const dealerHand = [dealerCard1, dealerCard2]
 
-      updateGameState({
-        phase: 'playerTurn',
-        playerHand,
-        dealerHand,
-        status: { message: '', type: 'info' },
-      })
+        updateGameState({
+          phase: 'playerTurn',
+          playerHand,
+          dealerHand,
+          status: { message: '', type: 'info' },
+        })
 
-      // Check for blackjack
-      const playerEval = evaluateHand(playerHand)
-      const dealerEval = evaluateHand(dealerHand)
+        // Check for blackjack
+        const playerEval = evaluateHand(playerHand)
+        const dealerEval = evaluateHand(dealerHand)
 
-      if (playerEval.isBlackjack || dealerEval.isBlackjack) {
-        handleBlackjack(playerEval.isBlackjack, dealerEval.isBlackjack)
+        if (playerEval.isBlackjack || dealerEval.isBlackjack) {
+          handleBlackjack(playerEval.isBlackjack, dealerEval.isBlackjack)
+        }
       }
     } else {
-      setStatus({
-        message: 'Error: Not enough cards to deal',
-        type: 'error',
+      // setStatus({
+      //   message: 'Error: Not enough cards to deal',
+      //   type: 'error',
+      // })
+
+      console.log('triggering reset, not enough cards to deal', {
+        discardPile,
+        deck,
       })
-      shuffle()
+
+      endRoundAndResetDeck()
+
+      // reset(new Zones.Deck([...createStandardDeck()]))
     }
-  }
+  }, [deck])
 
   const handleBlackjack = (
     playerHasBlackjack: boolean,
@@ -285,7 +305,7 @@ const Game: React.FC = () => {
           type: 'error',
         },
       })
-      await shuffleDeck()
+      // await shuffleDeck()
       return null
     }
     return card
@@ -317,8 +337,6 @@ const Game: React.FC = () => {
       })
     }
   }
-
-
 
   const sleep = (ms: number): Promise<void> =>
     new Promise((resolve) => setTimeout(resolve, ms))
