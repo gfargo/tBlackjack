@@ -1,5 +1,4 @@
-import chalk from 'chalk'
-import { Box, Text, useApp, useInput } from 'ink'
+import { Box, useApp, useInput } from 'ink'
 import { createStandardDeck, useDeck, Zones } from 'ink-playing-cards'
 import type { TCard } from 'ink-playing-cards/dist/types'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -7,12 +6,13 @@ import { DealerMessages } from '../../utils/dealerMessages.js'
 import { evaluateHand } from '../../utils/handEvaluation.js'
 import type { GameState, GameStatistics } from '../../utils/types.js'
 import { dealerPlay as playDealerTurn } from './dealerPlay.js'
-import DealerThought from './DealerThought.js'
 import GameControls from './GameControls.js'
+import GameFeedback from './GameFeedback.js'
 import GameStatisticsDisplay from './GameStatistics.js'
+
 import GameStats from './GameStats.js'
 import Hand from './Hand.js'
-import Message from './Message.js'
+
 
 const DECK_RESHUFFLE_THRESHOLD = 0.25 // Reshuffle when 25% cards remain
 
@@ -435,11 +435,7 @@ const Game: React.FC = () => {
   }, [])
 
   return (
-    <Box flexDirection="column" gap={1} padding={1}>
-      <Text bold color="green">
-        {chalk.bold('♠ ♥ ♣ ♦')} Blackjack {chalk.bold('♦ ♣ ♥ ♠')}
-      </Text>
-
+    <Box flexDirection="column" gap={1} paddingX={1} borderStyle={'classic'} borderDimColor>
       <GameStats
         phase={gameState.phase}
         remainingCards={deck.cards.length}
@@ -455,11 +451,11 @@ const Game: React.FC = () => {
         label="Dealer's Hand"
       />
 
-      <DealerThought
+      <GameFeedback
         hand={gameState.dealerHand}
         isDealing={gameState.phase === 'dealing'}
         isThinking={gameState.phase === 'dealerTurn'}
-        thoughtText={gameState.status.message}
+        status={gameState.status}
       />
 
       <Hand
@@ -469,8 +465,6 @@ const Game: React.FC = () => {
         label="Your Hand"
       />
 
-      <Message status={gameState.status} />
-
       <GameControls
         gamePhase={gameState.phase}
         remainingCards={deck.cards.length}
@@ -478,7 +472,7 @@ const Game: React.FC = () => {
       />
 
       <GameStatisticsDisplay
-        stats={gameState.statistics}
+        statistics={gameState.statistics}
         isVisible={showStats}
       />
     </Box>
