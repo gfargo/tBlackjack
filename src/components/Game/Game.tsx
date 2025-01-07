@@ -35,8 +35,14 @@ const Game: React.FC = () => {
   const [showStats, setShowStats] = useState(false)
   const [gameState, setGameState] = useState<GameState>({
     phase: 'dealing',
-    playerHand: [],
-    dealerHand: [],
+    playerHand: [
+      // { suit: 'hearts', value: 'JOKER', faceUp: false },
+      // { suit: 'hearts', value: 'JOKER', faceUp: false },
+    ],
+    dealerHand: [
+      // { suit: 'hearts', value: 'JOKER', faceUp: false },
+      // { suit: 'hearts', value: 'JOKER', faceUp: false },
+    ],
     status: { message: '', type: 'info' },
     handEvaluation: {
       player: {
@@ -157,7 +163,7 @@ const Game: React.FC = () => {
     // Visual feedback before shuffle
     updateGameState({
       status: {
-        message: '🔄 Shuffling deck...',
+        message: '🌊 Shuffling deck...',
         type: 'info',
         details: `${deck.cards.length} cards remaining`,
       },
@@ -172,13 +178,13 @@ const Game: React.FC = () => {
     // Confirmation message
     updateGameState({
       status: {
-        message: '✨ Deck shuffled',
+        message: '👏 Deck shuffled',
         type: 'info',
-        duration: 1000,
+        duration: 1250,
       },
     })
 
-    await sleep(1000)
+    await sleep(1250)
   }
 
   const shouldReshuffle = () => {
@@ -216,6 +222,7 @@ const Game: React.FC = () => {
 
   const startNewGame = useCallback(async () => {
     // Always shuffle at the start of a new game
+    await shuffleDeck()
 
     // need at least 4 cards to deal
     if (deck.cards.length >= 4) {
@@ -248,14 +255,7 @@ const Game: React.FC = () => {
       //   message: 'Error: Not enough cards to deal',
       //   type: 'error',
       // })
-
-      console.log('triggering reset, not enough cards to deal', {
-        discardPile,
-        deck,
-      })
-
       endRoundAndResetDeck()
-
       // reset(new Zones.Deck([...createStandardDeck()]))
     }
   }, [deck])
@@ -435,11 +435,14 @@ const Game: React.FC = () => {
   }, [])
 
   return (
-    <Box flexDirection="column" gap={1} paddingX={1} borderStyle={'classic'} borderDimColor>
+    <Box flexDirection="column" gap={0} paddingX={1} borderStyle={'singleDouble'} borderDimColor>
       <GameStats
         phase={gameState.phase}
         remainingCards={deck.cards.length}
         isDoubleDown={gameState.isDoubleDown}
+        dealerHand={gameState.dealerHand}
+        isDealing={gameState.phase === 'dealing'}
+        isThinking={gameState.phase === 'dealerTurn'}
       />
 
       <Hand
@@ -451,12 +454,7 @@ const Game: React.FC = () => {
         label="Dealer's Hand"
       />
 
-      <GameFeedback
-        hand={gameState.dealerHand}
-        isDealing={gameState.phase === 'dealing'}
-        isThinking={gameState.phase === 'dealerTurn'}
-        status={gameState.status}
-      />
+      <GameFeedback status={gameState.status} />
 
       <Hand
         cards={gameState.playerHand}

@@ -22,7 +22,7 @@ const GameStatisticsDisplay: React.FC<GameStatisticsProps> = ({
   isVisible,
 }) => {
   return (
-    <Box flexDirection="column" gap={1}>
+    <Box flexDirection="column" gap={1} marginTop={1}>
       {isVisible && (
         <Box flexDirection="column" gap={1}>
           <Box>

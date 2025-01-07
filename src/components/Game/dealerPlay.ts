@@ -1,8 +1,7 @@
-import { DealerAI } from '../../utils/dealerAI.js'
-import { evaluateHand } from '../../utils/handEvaluation.js'
-import { DealerMessages } from '../../utils/dealerMessages.js'
 import type { TCard } from 'ink-playing-cards/dist/types'
-
+import { DealerAI } from '../../utils/dealerAI.js'
+import { DealerMessages } from '../../utils/dealerMessages.js'
+import { evaluateHand } from '../../utils/handEvaluation.js'
 
 interface DealerPlayContext {
   updateGameState: (updates: any) => void
@@ -21,51 +20,53 @@ export const dealerPlay = async (
 
   // Initial pause to build suspense
   updateGameState({
-    status: { 
-      message: DealerMessages.CHECKING_CARDS, 
-      type: 'info' 
+    status: {
+      message: DealerMessages.CHECKING_CARDS,
+      type: 'info',
     },
-    dealerHand: currentHand
+    dealerHand: currentHand,
   })
   await sleep(2000)
 
   while (decision.action === 'hit') {
     // Show dealer thinking about decision
     updateGameState({
-      status: { 
+      status: {
         message: DealerMessages.CONSIDERING_MOVE,
         type: 'info',
-        duration: 2000
-      }
+        duration: 2000,
+      },
     })
     await sleep(2000)
 
     // Draw card with dramatic pause
     updateGameState({
-      status: { 
+      status: {
         message: DealerMessages.DRAWING_CARD,
         type: 'info',
-        duration: 2000
-      }
+        duration: 2000,
+      },
     })
-    await sleep(2000)
+    await sleep(1500)
 
     const card = await drawCard()
     if (!card) return
 
+    // Add the card and update state
+    const previewHand = [...currentHand, { ...card, faceUp: false }]
+    currentHand = [...currentHand, { ...card, faceUp: true }]
+
     // Show the new card with a pause
     updateGameState({
-      dealerHand: currentHand,
+      dealerHand: previewHand,
       status: {
         message: DealerMessages.REVEALING_CARD,
         type: 'info',
-        duration: 1500
-      }
+        duration: 1600,
+      },
     })
-    await sleep(1500)
+    await sleep(1600)
 
-    // Add the card and update state
-    currentHand = [...currentHand, card]
     dealer = new DealerAI(currentHand)
     decision = dealer.shouldHit()
 
@@ -76,8 +77,8 @@ export const dealerPlay = async (
       status: {
         message: DealerMessages.getHandStatus(evaluation),
         type: 'info',
-        duration: 2500
-      }
+        duration: 2500,
+      },
     })
     await sleep(2500)
   }
@@ -89,15 +90,15 @@ export const dealerPlay = async (
     status: {
       message: DealerMessages.getFinalStatus(finalEvaluation),
       type: 'info',
-      duration: 2000
-    }
+      duration: 2000,
+    },
   })
   await sleep(2000)
 
   // Evaluate final result
   updateGameState({
     dealerHand: currentHand,
-    phase: 'evaluating'
+    phase: 'evaluating',
   })
 
   await sleep(500)
