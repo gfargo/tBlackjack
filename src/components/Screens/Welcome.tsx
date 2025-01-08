@@ -11,22 +11,16 @@ interface WelcomeProps {
   onToggleHelp: () => void
 }
 
+const GITHUB_DISCUSSION_URL =
+  'https://github.com/gfargo/tBlackjack/discussions/3'
+
 const Welcome: React.FC<WelcomeProps> = ({
   onStartGame,
   showHelp,
   onToggleHelp,
 }) => {
   const { exit } = useApp()
-
-  // useInput((input) => {
-  //   if (input === 's') {
-  //     onStartGame()
-  //   } else if (input === 'h') {
-  //     onToggleHelp()
-  //   } else if (input === 'q') {
-  //     exit()
-  //   }
-  // })
+  const [showMultiplayer, setShowMultiplayer] = React.useState(false)
 
   return (
     <Box
@@ -71,6 +65,23 @@ const Welcome: React.FC<WelcomeProps> = ({
               <Text>• Press N for a new game when round is over</Text>
             </Box>
           </Box>
+        ) : showMultiplayer ? (
+          <Box flexDirection="column" marginY={1} gap={1}>
+            <Text bold>Multiplayer Mode</Text>
+            <Text>
+              Admittedly, I've got a pretty busy schedule but would love to find
+              the time to add Multiplayer support.  Let me know if
+              it's something you'd like to see by joining the discussion on
+              GitHub:
+            </Text>
+            <Text color="blue" underline>
+              {GITHUB_DISCUSSION_URL}
+            </Text>
+            <Text>
+              Your feedback and suggestions will help shape the multiplayer
+              experience! 💜
+            </Text>
+          </Box>
         ) : (
           <Gradient name="morning">
             <BigText text="Blackjack" />
@@ -88,10 +99,16 @@ const Welcome: React.FC<WelcomeProps> = ({
           // )}
           items={[
             {
-              label: 'Start Game',
+              label: 'Single Player',
               value: 's',
-              indicator: '♠ ',
+              indicator: '♠',
               hotkey: 's',
+            },
+            {
+              label: 'Multiplayer',
+              value: 'm',
+              indicator: '♦',
+              hotkey: 'm',
             },
             {
               label: showHelp ? 'Hide Help' : 'Toggle Help',
@@ -109,8 +126,11 @@ const Welcome: React.FC<WelcomeProps> = ({
           onSelect={({ value }) => {
             if (value === 's') {
               onStartGame()
+            } else if (value === 'm') {
+              setShowMultiplayer(true)
             } else if (value === 'h') {
               onToggleHelp()
+              setShowMultiplayer(false)
             } else if (value === 'q') {
               exit()
             }
