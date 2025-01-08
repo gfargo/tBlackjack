@@ -1,6 +1,6 @@
 {
   "name": "tblackjack",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A simple blackjack game for the terminal",
   "author": "gfargo <ghfargo@gmail.com>",
   "license": "MIT",
