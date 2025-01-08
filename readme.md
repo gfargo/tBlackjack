@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/tblackjack.svg)](https://badge.fury.io/js/tblackjack)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A beautiful terminal-based Blackjack game built with [Ink](https://github.com/vadimdemedes/ink) and ♠️ [ink-playing-cards](https://github.com/gfargo/ink-playing-cards/) ♥️ 
+A terminal-based Blackjack game built with [Ink](https://github.com/vadimdemedes/ink) and ♠️ [ink-playing-cards](https://github.com/gfargo/ink-playing-cards/) ♥️ 
 
 ![tBlackjack Demo](https://raw.githubusercontent.com/gfargo/tblackjack/main/assets/demo.gif)
 
