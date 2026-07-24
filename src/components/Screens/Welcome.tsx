@@ -1,8 +1,8 @@
 import { Box, Text, useApp } from 'ink'
-import BigText from 'ink-big-text'
 import { EnhancedSelectInput } from 'ink-enhanced-select-input'
 import Gradient from 'ink-gradient'
 import React from 'react'
+import { BLACKJACK_BANNER } from './blackjackBanner.js'
 EnhancedSelectInput
 
 interface WelcomeProps {
@@ -84,7 +84,7 @@ const Welcome: React.FC<WelcomeProps> = ({
           </Box>
         ) : (
           <Gradient name="morning">
-            <BigText text="Blackjack" />
+            <Text>{BLACKJACK_BANNER}</Text>
           </Gradient>
         )}
       </Box>
